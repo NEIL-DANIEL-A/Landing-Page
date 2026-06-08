@@ -1,0 +1,105 @@
+"use client";
+
+import React, { useState } from "react";
+import HeroBanner from "@/components/HeroBanner";
+import StatsCard from "@/components/StatsCard";
+import CalendarCard from "@/components/CalendarCard";
+import UpcomingEvent from "@/components/UpcomingEvent";
+import Announcements from "@/components/Announcements";
+import { Trophy, Calendar } from "lucide-react";
+import { motion } from "framer-motion";
+import LeaderboardTable from "@/components/LeaderboardTable";
+import GlassCard from "@/components/GlassCard";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+export default function Home() {
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  return (
+    <>
+      <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="flex flex-col gap-8 w-full"
+    >
+      {/* 1. Welcome Hero Banner */}
+      <HeroBanner onViewLeaderboardClick={() => setLeaderboardOpen(true)} />
+
+      {/* 2. Statistics Section (3 columns) */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        <StatsCard
+          label="Points"
+          value="1,920"
+          subtext="Top 15% this month"
+          icon={Trophy}
+          iconClass="text-brand-orange"
+          iconBgClass="bg-brand-orange/15 shadow-brand-orange/5"
+          onClick={() => setLeaderboardOpen(true)}
+          delay={0.1}
+          style={{ background: "linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(35, 47, 62, 0.15))" }}
+        />
+        <StatsCard
+          label="Events Attended"
+          value="8"
+          subtext="3 Upcoming"
+          icon={Calendar}
+          iconClass="text-purple-600"
+          iconBgClass="bg-purple-600/15 shadow-purple-600/5"
+          href="/events"
+          delay={0.2}
+          style={{ background: "linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(35, 47, 62, 0.15))" }}
+        />
+        <CalendarCard />
+      </section>
+
+      {/* 3. Content Section (Upcoming Event | Announcements) */}
+      <section id="events" className="grid grid-cols-1 lg:grid-cols-10 gap-6 md:gap-8 items-stretch">
+        {/* Left Side: Upcoming Event (60%) */}
+        <div className="lg:col-span-6 flex flex-col">
+          <h2 className="text-xs font-bold text-foreground/40 uppercase tracking-widest mb-3.5 pl-1">
+            Upcoming Event
+          </h2>
+          <div className="flex-1">
+            <UpcomingEvent />
+          </div>
+        </div>
+
+        {/* Right Side: Announcements (40%) */}
+        <div className="lg:col-span-4 flex flex-col">
+          <h2 className="text-xs font-bold text-foreground/40 uppercase tracking-widest mb-3.5 pl-1">
+            Announcements
+          </h2>
+          <div className="flex-1">
+            <Announcements />
+          </div>
+        </div>
+      </section>
+    </motion.div>
+      {leaderboardOpen && (
+      <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setLeaderboardOpen(false)} />
+        <div className="relative z-10 w-full max-w-3xl">
+          <GlassCard className="overflow-hidden p-0 leaderboard-modal-panel" hoverEffect={false}>
+            <div className="p-4 border-b border-black/5 flex items-center justify-between">
+              <h3 className="text-lg font-bold text-foreground font-display">Leaderboard</h3>
+              <button onClick={() => setLeaderboardOpen(false)} className="text-foreground/60 p-2 rounded-lg hover:bg-black/5">Close</button>
+            </div>
+            <div className="p-4">
+              <LeaderboardTable />
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    )}
+    </>
+  );
+}
