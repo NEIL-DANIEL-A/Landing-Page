@@ -95,7 +95,7 @@ body {
 /* Lightweight backgrounds for announcements and featured events */
 .announcements-bg,
 .featured-event-bg {
-  background: linear-gradient(135deg, rgba(0, 115, 187, 0.1), rgba(255, 153, 0, 0.15));
+  background: linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(35, 47, 62, 0.15));
 }
 
 /* Custom Hide Scrollbar Utility */
