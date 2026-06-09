@@ -15,11 +15,11 @@ export default function Announcements() {
           <div className="w-8 h-8 rounded-lg bg-brand-orange/10 flex items-center justify-center text-brand-orange">
             <Bell className="w-4 h-4" />
           </div>
-          <h3 className="text-lg font-bold text-foreground font-display">
+          <h3 className="text-xl font-bold text-foreground font-display">
             Community Announcements
           </h3>
         </div>
-        <span className="text-xs text-foreground/50 font-medium">
+        <span className="text-sm text-foreground/50 font-medium">
           {announcements.length} updates
         </span>
       </div>
@@ -35,27 +35,13 @@ export default function Announcements() {
                 idx !== announcements.length - 1 && "border-b border-black/[0.04] pb-4"
               )}
             >
-              <div className="flex items-start justify-between gap-3 mb-1.5">
-                <span className={cn(
-                  "text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide",
-                  ann.tagColor === "orange" && "bg-brand-orange/10 text-brand-orange",
-                  ann.tagColor === "blue" && "bg-brand-blue/10 text-brand-blue",
-                  ann.tagColor === "green" && "bg-emerald-500/10 text-emerald-600",
-                  ann.tagColor === "purple" && "bg-purple-500/10 text-purple-600"
-                )}>
-                  {ann.tag}
-                </span>
-                <span className="text-[11px] text-foreground/45 font-medium">
-                  {ann.date}
-                </span>
-              </div>
 
-              <h4 className="text-[14px] font-bold text-foreground group-hover:text-brand-orange transition-colors flex items-center gap-1">
+              <h4 className="text-[16px] font-bold text-foreground group-hover:text-brand-orange transition-colors flex items-center gap-1">
                 <span>{ann.title}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
               </h4>
 
-              <p className="text-xs text-foreground/75 leading-relaxed mt-1">
+              <p className="text-sm text-foreground/75 leading-relaxed mt-1">
                 {ann.description}
               </p>
             </div>

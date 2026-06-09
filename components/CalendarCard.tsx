@@ -23,11 +23,7 @@ function buildEventMap(evts: CommunityEvent[]): Record<string, CommunityEvent[]>
   return map;
 }
 
-const TAG_COLORS: Record<string, string> = {
-  Conference: "bg-brand-orange text-white",
-  Workshop:   "bg-brand-blue text-white",
-  Bootcamp:   "bg-brand-teal text-white",
-};
+
 
 const DAYS   = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
@@ -95,9 +91,14 @@ export default function CalendarCard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
         onClick={openModal}
-        className="glass-panel rounded-[22px] overflow-hidden p-6 border border-white/25 cursor-pointer select-none transition-shadow duration-300 hover:shadow-md"
-        style={{ background: "linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(35, 47, 62, 0.15))" }}
-        whileHover={{ y: -5, boxShadow: "0 12px 36px rgba(0,0,0,0.08)", borderColor: "rgba(255,255,255,0.4)" }}
+        className="glass-panel rounded-[22px] overflow-hidden p-6 border border-white/25 cursor-pointer select-none transition-all duration-[250ms] ease-out"
+        style={{ background: "rgba(255, 255, 255, 0.92)" }}
+        whileHover={{
+          y: -3,
+          boxShadow: "-12px 0 28px rgba(105, 145, 255, 0), 12px 0 28px rgba(0, 0, 0, 0.4), 0 10px 20px rgba(15, 23, 42, 0.10)",
+          borderColor: "rgba(255, 255, 255, 0.4)",
+          transition: { duration: 0.25, ease: "easeOut" },
+        }}
         whileTap={{ scale: 0.98 }}
       >
         <div className="flex items-center justify-between">
@@ -274,9 +275,6 @@ export default function CalendarCard() {
                           </span>
                           <span className="text-xs text-foreground/50 mt-0.5 block">{evt.date} · {evt.time}</span>
                         </div>
-                        <span className={`px-2.5 py-1 rounded-md text-xs font-bold flex-shrink-0 ${TAG_COLORS[evt.tag] ?? "bg-black/10 text-foreground"}`}>
-                          {evt.tag}
-                        </span>
                       </button>
                     );
                   })

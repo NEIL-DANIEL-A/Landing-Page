@@ -12,7 +12,7 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: # ;
   --foreground: #1A1C1E;
 }
 
@@ -25,22 +25,29 @@ body {
 
 /* Glassmorphism Styles */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(0, 115, 187, 0.1), rgba(255, 153, 0, 0.15));
+  background: white;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 
-.glass-panel-dark {
-  background: rgba(10, 10, 10, 0.05);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+/* Hero Banner Glassmorphism — light-theme frosted glass */
+.hero-glass {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 2px 0 0 rgba(255, 255, 255, 0.9) inset,   /* top highlight line */
+    0 -1px 0 0 rgba(255, 255, 255, 0.3) inset,  /* bottom shimmer */
+    0 20px 60px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
+
 /* Animated Hero Gradient Background */
+/*
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;
@@ -60,9 +67,8 @@ body {
   border-radius: 22px;
   background: linear-gradient(
     96deg,
-    rgb(255, 148, 241) 7.63%,
-    rgb(151, 138, 255) 37.94%,
-    rgb(0, 210, 229) 65.23%,
+    rgb(190, 175, 144) 7.63%,
+    rgba(255, 200, 104, 0.974) 65.23%,
     rgb(143, 255, 248) 92.12%
   );
   background-size: 400% 400%;
@@ -74,11 +80,11 @@ body {
   height: 100%;
   background: radial-gradient(
     100% 140% at 60% -10%,
-    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.31) 0%,
     rgb(255, 255, 255) 75%
   );
 }
-
+*/
 /* Stronger leaderboard modal background */
 .leaderboard-modal-panel {
   background: rgba(255, 255, 255, 0.92) !important;

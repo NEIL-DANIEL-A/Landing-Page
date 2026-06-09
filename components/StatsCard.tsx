@@ -56,7 +56,7 @@ export default function StatsCard({
   if (onClick) {
     return (
       <div className="block w-full">
-        <GlassCard onClick={onClick} delay={delay} style={style} className="hover:shadow-md border border-white/30 cursor-pointer">
+        <GlassCard onClick={onClick} delay={delay} style={style} className="border border-white/30 cursor-pointer">
           <CardContent />
         </GlassCard>
       </div>
@@ -66,7 +66,7 @@ export default function StatsCard({
   if (href) {
     return (
       <Link href={href} className="block w-full">
-        <GlassCard delay={delay} style={style} className="hover:shadow-md border border-white/30 cursor-pointer">
+        <GlassCard delay={delay} style={style} className="border border-white/30 cursor-pointer">
           <CardContent />
         </GlassCard>
       </Link>
