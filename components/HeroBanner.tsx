@@ -116,7 +116,7 @@ export default function HeroBanner({ onViewLeaderboardClick }: HeroBannerProps =
               {/* Central Main Large Icon (AWS Logo) */}
               <motion.div
                 animate={{
-                  y: [0, -10, 0],
+                  y: [5, -5, 5],
                 }}
                 transition={{
                   duration: 5,
@@ -160,21 +160,23 @@ export default function HeroBanner({ onViewLeaderboardClick }: HeroBannerProps =
                       }}
                       animate={{
                         rotate: [-item.angle, -item.angle - 360],
+                        scale: isHovered ? 1.25 : 1,
+                        boxShadow: isHovered
+                          ? "0 12px 24px -10px rgba(0, 0, 0, 0.15), 0 8px 16px -8px rgba(0, 0, 0, 0.15)"
+                          : "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+                        borderColor: isHovered
+                          ? "rgba(255, 153, 0, 0.35)"
+                          : "rgba(0, 0, 0, 0.1)",
+                        zIndex: isHovered ? 30 : 20,
                       }}
                       transition={{
-                        duration: 40,
-                        repeat: Infinity,
-                        ease: "linear",
+                        rotate: { duration: 40, repeat: Infinity, ease: "linear" },
+                        scale: { type: "spring", stiffness: 400, damping: 15 },
+                        boxShadow: { type: "spring", stiffness: 400, damping: 15 },
+                        borderColor: { type: "spring", stiffness: 400, damping: 15 },
                       }}
                       onHoverStart={() => setHoveredIcon(item.label)}
                       onHoverEnd={() => setHoveredIcon(null)}
-                      whileHover={{
-                        scale: 1.25,
-                        boxShadow: "0 12px 24px -10px rgba(0, 0, 0, 0.15), 0 8px 16px -8px rgba(0, 0, 0, 0.15)",
-                        borderColor: "rgba(255, 153, 0, 0.35)",
-                        zIndex: 30,
-                        transition: { type: "spring", stiffness: 400, damping: 15 }
-                      }}
                     >
                       <img src={item.src} alt={item.label} className="w-8 h-8 object-contain" />
                       {isHovered && (

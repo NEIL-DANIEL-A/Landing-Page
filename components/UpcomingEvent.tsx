@@ -31,7 +31,7 @@ export default function UpcomingEvent() {
   }
 
   return (
-    <GlassCard className="p-0 overflow-hidden flex flex-col lg:flex-row h-full border border-white/30 featured-event-bg" hoverEffect={false}>
+    <GlassCard className="p-0 overflow-hidden flex flex-col lg:flex-row h-full border border-white/30" hoverEffect={false} style={{ background: "linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(35, 47, 62, 0.15))" }}>
       {/* Poster */}
       <div className="relative w-full lg:w-[42%] aspect-[4/5] overflow-hidden bg-slate-50">
         <img
