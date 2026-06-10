@@ -6,10 +6,29 @@ import StatsCard from "@/components/StatsCard";
 import CalendarCard from "@/components/CalendarCard";
 import UpcomingEvent from "@/components/UpcomingEvent";
 import Announcements from "@/components/Announcements";
-import { Trophy, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import LeaderboardTable from "@/components/LeaderboardTable";
 import GlassCard from "@/components/GlassCard";
+
+function AwsEventBridgeIcon({ className }: { className?: string }) {
+  return (
+    <img
+      src="/aws-EventBridge.svg"
+      alt="AWS EventBridge"
+      className={className}
+    />
+  );
+}
+
+function AwsTrustedAdvisorIcon({ className }: { className?: string }) {
+  return (
+    <img
+      src="/aws-TrustedAdvisor.svg"
+      alt="AWS Trusted Advisor"
+      className={className}
+    />
+  );
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,9 +59,10 @@ export default function Home() {
             label="Points"
             value="1,920"
             subtext="Top 15% this month"
-            icon={Trophy}
-            iconClass="text-brand-orange"
-            iconBgClass="bg-brand-orange/15 shadow-brand-orange/5"
+            icon={AwsTrustedAdvisorIcon}
+            iconClass="text-600"
+            bareIcon
+            iconLabel="Trusted Advisor"
             onClick={() => setLeaderboardOpen(true)}
             delay={0.1}
             style={{ background: "rgba(255, 255, 255, 0.92)" }}
@@ -51,11 +71,12 @@ export default function Home() {
             label="Events Attended"
             value="8"
             subtext="3 Upcoming"
-            icon={Calendar}
-            iconClass="text-purple-600"
-            iconBgClass="bg-purple-600/15 shadow-purple-600/5"
+            icon={AwsEventBridgeIcon}
+            iconClass="text-600"
+            bareIcon
+            iconLabel="EventBridge"
             href="/events"
-            delay={0.2}
+            delay={0.1}
             style={{ background: "rgba(255, 255, 255, 0.92)" }}
           />
           <CalendarCard />

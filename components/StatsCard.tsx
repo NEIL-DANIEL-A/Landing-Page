@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import GlassCard from "./GlassCard";
 import { cn } from "@/lib/utils";
@@ -11,11 +11,13 @@ interface StatsCardProps {
   subtext: string;
   icon: React.ComponentType<{ className?: string }>;
   iconClass: string;
-  iconBgClass: string;
+  iconBgClass?: string;
+  bareIcon?: boolean;
   href?: string;
   onClick?: () => void;
   delay?: number;
   style?: React.CSSProperties;
+  iconLabel?: string;
 }
 
 export default function StatsCard({
@@ -25,11 +27,15 @@ export default function StatsCard({
   icon: Icon,
   iconClass,
   iconBgClass,
+  bareIcon = false,
   href,
   onClick,
   delay = 0,
   style,
+  iconLabel,
 }: StatsCardProps) {
+  const [iconHovered, setIconHovered] = useState(false);
+
   const CardContent = () => (
     <div className="flex items-center justify-between">
       <div className="flex flex-col gap-1 min-w-0">
@@ -44,12 +50,27 @@ export default function StatsCard({
         </span>
       </div>
 
-      <div className={cn(
-        "w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner",
-        iconBgClass
-      )}>
-        <Icon className={cn("w-5 h-5", iconClass)} />
-      </div>
+      {bareIcon ? (
+        <div
+          className="relative"
+          onMouseEnter={() => setIconHovered(true)}
+          onMouseLeave={() => setIconHovered(false)}
+        >
+          <Icon className={cn("w-20 h-20 transition-transform duration-200", iconClass, iconHovered && "scale-110")} />
+          {iconLabel && iconHovered && (
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-black/85 backdrop-blur-sm text-white text-[9px] font-extrabold rounded-md shadow-lg border border-white/10 whitespace-nowrap pointer-events-none tracking-wider uppercase z-30">
+              {iconLabel}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className={cn(
+          "w-16 h-16 rounded-2xl flex items-center justify-center shadow-inner",
+          iconBgClass
+        )}>
+          <Icon className={cn("w-20 h-20", iconClass)} />
+        </div>
+      )}
     </div>
   );
 

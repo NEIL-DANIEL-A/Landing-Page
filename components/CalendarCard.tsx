@@ -2,9 +2,19 @@
 
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CalendarDays, ChevronLeft, ChevronRight, X, Clock, MapPin, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Clock, MapPin, ArrowRight, CalendarDays } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { events, CommunityEvent } from "@/data/events";
+
+function AwsCloudWatchIcon({ className }: { className?: string }) {
+  return (
+    <img
+      src="/aws-cloudwatch.svg"
+      alt="AWS CloudWatch"
+      className={className}
+    />
+  );
+}
 
 // Parse "Jun 20, 2026" → Date object
 function parseEventDate(dateStr: string): Date {
@@ -25,23 +35,24 @@ function buildEventMap(evts: CommunityEvent[]): Record<string, CommunityEvent[]>
 
 
 
-const DAYS   = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December",
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
 export default function CalendarCard() {
   const router = useRouter();
-  const today  = new Date();
+  const today = new Date();
 
-  const [isOpen,      setIsOpen]      = useState(false);
-  const [viewYear,    setViewYear]    = useState(today.getFullYear());
-  const [viewMonth,   setViewMonth]   = useState(today.getMonth());
+  const [isOpen, setIsOpen] = useState(false);
+  const [viewYear, setViewYear] = useState(today.getFullYear());
+  const [viewMonth, setViewMonth] = useState(today.getMonth());
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [iconHovered, setIconHovered] = useState(false);
 
-  const eventMap        = buildEventMap(events);
-  const upcomingCount   = events.filter(e => parseEventDate(e.date) >= today).length;
+  const eventMap = buildEventMap(events);
+  const upcomingCount = events.filter(e => parseEventDate(e.date) >= today).length;
 
   /* ── month navigation ── */
   const prevMonth = useCallback(() => {
@@ -65,7 +76,7 @@ export default function CalendarCard() {
   }, [viewMonth]);
 
   /* ── day grid ── */
-  const firstDay    = new Date(viewYear, viewMonth, 1).getDay();
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
   const cells: (number | null)[] = [
     ...Array(firstDay).fill(null),
@@ -80,7 +91,7 @@ export default function CalendarCard() {
   });
 
   /* ── open/close ── */
-  const openModal  = () => { setSelectedDay(null); setIsOpen(true); };
+  const openModal = () => { setSelectedDay(null); setIsOpen(true); };
   const closeModal = () => setIsOpen(false);
 
   return (
@@ -111,8 +122,17 @@ export default function CalendarCard() {
               {upcomingCount} upcoming event{upcomingCount !== 1 ? "s" : ""}
             </span>
           </div>
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner bg-brand-teal/15">
-            <CalendarDays className="w-5 h-5 text-brand-teal" />
+          <div
+            className="relative"
+            onMouseEnter={() => setIconHovered(true)}
+            onMouseLeave={() => setIconHovered(false)}
+          >
+            <AwsCloudWatchIcon className={`w-21 h-21 transition-transform duration-200 ${iconHovered ? "scale-110" : ""}`} />
+            {iconHovered && (
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-black/85 backdrop-blur-sm text-white text-[9px] font-extrabold rounded-md shadow-lg border border-white/10 whitespace-nowrap pointer-events-none tracking-wider uppercase z-30">
+                CloudWatch
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
@@ -149,9 +169,7 @@ export default function CalendarCard() {
               {/* ── Header ── */}
               <div className="flex items-center justify-between px-8 pt-6 pb-5 border-b border-black/[0.06] flex-shrink-0">
                 <div className="flex items-center gap-3.5">
-                  <div className="w-11 h-11 rounded-xl bg-brand-teal/10 flex items-center justify-center text-brand-teal">
-                    <CalendarDays className="w-6 h-6" />
-                  </div>
+                  <AwsCloudWatchIcon className="w-10 h-10" />
                   <div>
                     <h2 className="text-xl font-extrabold text-foreground font-display leading-none">
                       Community Calendar
@@ -208,13 +226,13 @@ export default function CalendarCard() {
                 {cells.map((day, idx) => {
                   if (!day) return <div key={`empty-${idx}`} />;
 
-                  const key       = `${viewYear}-${viewMonth}-${day}`;
+                  const key = `${viewYear}-${viewMonth}-${day}`;
                   const dayEvents = eventMap[key] ?? [];
-                  const hasEvent  = dayEvents.length > 0;
-                  const isToday   =
+                  const hasEvent = dayEvents.length > 0;
+                  const isToday =
                     day === today.getDate() &&
                     viewMonth === today.getMonth() &&
-                    viewYear  === today.getFullYear();
+                    viewYear === today.getFullYear();
                   const isSelected = selectedDay === day && hasEvent;
 
                   return (
@@ -229,10 +247,10 @@ export default function CalendarCard() {
                           hasEvent && isSelected
                             ? "bg-brand-orange text-white shadow-md shadow-brand-orange/30 ring-2 ring-brand-orange/40 scale-110"
                             : hasEvent
-                            ? "bg-brand-orange/80 text-white shadow-sm shadow-brand-orange/20 hover:scale-105 cursor-pointer"
-                            : isToday
-                            ? "ring-2 ring-brand-teal text-brand-teal font-bold cursor-default"
-                            : "text-foreground/70 hover:bg-black/5 cursor-default",
+                              ? "bg-brand-orange/80 text-white shadow-sm shadow-brand-orange/20 hover:scale-105 cursor-pointer"
+                              : isToday
+                                ? "ring-2 ring-brand-teal text-brand-teal font-bold cursor-default"
+                                : "text-foreground/70 hover:bg-black/5 cursor-default",
                         ].join(" ")}
                         aria-label={hasEvent ? `View events on ${MONTHS[viewMonth]} ${day}` : undefined}
                       >
@@ -262,11 +280,10 @@ export default function CalendarCard() {
                           closeModal();
                           router.push(`/events?register=${evt.id}`);
                         }}
-                        className={`flex items-center gap-4 text-base w-full text-left rounded-2xl px-4 py-3.5 border transition-all duration-200 cursor-pointer ${
-                          isHighlighted
+                        className={`flex items-center gap-4 text-base w-full text-left rounded-2xl px-4 py-3.5 border transition-all duration-200 cursor-pointer ${isHighlighted
                             ? "bg-brand-orange/10 border-brand-orange/30 shadow-sm shadow-brand-orange/5 translate-x-1.5"
                             : "border-transparent hover:bg-black/[0.03]"
-                        }`}
+                          }`}
                       >
                         <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 transition-transform duration-200 ${isHighlighted ? "bg-brand-orange scale-125" : "bg-brand-orange/60"}`} />
                         <div className="flex-1 min-w-0">
